@@ -1,0 +1,24 @@
+.buttonContainer {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 6rem;
+}
+
+
+.button {
+    padding: 0.5rem 1rem;
+    width: 170px;
+    height: 60px;
+    background-color: #3d52a0;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #eee2dc;
+    font-family: 'Mate', serif;
+}
+
+.button:hover {
+    background-color: #bd3df4;
+}

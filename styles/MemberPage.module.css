@@ -1,0 +1,90 @@
+.container {
+    padding: 20px;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .gridContainer {
+    margin-top: 30px;
+    display: grid; /* Grid layout for multiple columns */
+    gap: 30px; /* Adjust spacing between step boxes */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    justify-content: center; /* Center align items horizontally */
+  }
+  
+  .stepBox {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Mate', serif; /* Font */
+    background-color: #727374; /* Default background color */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 10px; /* Add space between elements */
+  }
+  
+  .stepBox h3 {
+    color: #123c69;
+  }
+  
+  .stepBox h3 span.stepName {
+    font-size: 1.5rem; /* Bigger size for step name */
+    color: #ac3b61; /* Different color for step name */
+  }
+  
+  .stepBox p {
+    margin: 10px 0;
+  }
+  
+  .stepBox a {
+    color: #3d52a0;
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+  
+  .stepBox a:hover {
+    color: #ac3b6a; /* Change color on hover */
+  }
+  
+  .stepBox button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: #eee2dc;
+    cursor: pointer;
+    font-family: 'Mate', serif;
+    margin-top: 5px; /* Add space between buttons */
+  }
+  
+  .voteButton {
+    background-color: #ac3b61; /* Red background for vote button */
+    color: white; /* White text */
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Mate', serif; /* Mate font */
+  }
+  
+  .stepBox.buttonStart {
+    background-color: #3d52a0; /* Default background */
+  }
+  
+  .stepBox.buttonFinish {
+    background-color: #3d52a0; /* Background color on hover */
+  }
+  
+  .stepBox.inProgress {
+    background-color: #ffffff;
+  }
+  
+  .stepBox.notStarted {
+    background-color: #adbbda;
+  }
+  
+  .stepBox.finished {
+    background-color: #919294; /* Similar to not started color for finished */
+  }
+  

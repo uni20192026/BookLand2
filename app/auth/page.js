@@ -1,8 +1,10 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
+import classes from "./auth.module.css";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -35,11 +37,11 @@ export default function Auth() {
       redirect: false,
       email,
       password,
-      callbackUrl: `${window.location.origin}/protected`
+      callbackUrl: `${window.location.origin}/protected`,
     });
 
     if (res?.ok) {
-      router.push("/protected");  // Ensure the redirection is to the protected page
+      router.push("/"); // Ensure the redirection is to the protected page
     } else {
       alert("Failed to sign in");
     }
@@ -50,9 +52,10 @@ export default function Auth() {
       <h1>{isSignUp ? "Sign Up" : "Sign In"}</h1>
       <form onSubmit={isSignUp ? handleSignUp : handleSignIn}>
         {isSignUp && (
-          <div>
+          <div className={classes.label}>
             <label htmlFor="name">Name:</label>
             <input
+              className={classes.input}
               type="text"
               id="name"
               value={name}
@@ -60,29 +63,41 @@ export default function Auth() {
             />
           </div>
         )}
-        <div>
+        <div className={classes.label}>
           <label htmlFor="email">Email:</label>
           <input
+            className={classes.input}
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
+        <div className={classes.label}>
           <label htmlFor="password">Password:</label>
           <input
+            className={classes.input}
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</button>
+        <div className={classes.btnContainer}>
+          <button type="submit" className={classes.btnSubmit}>
+            {isSignUp ? "Sign Up" : "Sign In"}
+          </button>
+          <button
+            type="button"
+            className={classes.btnBottum}
+            onClick={() => setIsSignUp(!isSignUp)}
+          >
+            {isSignUp
+              ? "Already have an account? Sign In"
+              : "New here? Sign Up"}
+          </button>
+        </div>
       </form>
-      <button onClick={() => setIsSignUp(!isSignUp)}>
-        {isSignUp ? "Already have an account? Sign In" : "New here? Sign Up"}
-      </button>
     </div>
   );
 }

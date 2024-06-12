@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import classes from "../../homepage.module.css";
 
 export default function ClubInfoPage({ params }) {
   const { id } = params;
@@ -14,7 +15,7 @@ export default function ClubInfoPage({ params }) {
     async function fetchClub() {
       const res = await fetch(`/api/clubs/${id}`);
       if (!res.ok) {
-        console.error('Failed to fetch club data:', await res.json());
+        console.error("Failed to fetch club data:", await res.json());
         return;
       }
       const data = await res.json();
@@ -25,15 +26,15 @@ export default function ClubInfoPage({ params }) {
 
   const handleJoin = async () => {
     if (!session) {
-      alert('You must be logged in to join the club.');
-      router.push('/auth');
+      alert("You must be logged in to join the club.");
+      router.push("/auth");
       return;
     }
 
-    const res = await fetch('/api/clubs/join', {
-      method: 'POST',
+    const res = await fetch("/api/clubs/join", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         clubId: id,
@@ -42,12 +43,12 @@ export default function ClubInfoPage({ params }) {
     });
 
     if (res.ok) {
-      alert('Successfully joined the club!');
+      alert("Successfully joined the club!");
       const updatedClub = await res.json();
       setClub(updatedClub);
     } else {
       const errorData = await res.json();
-      alert('Failed to join the club: ' + errorData.message);
+      alert("Failed to join the club: " + errorData.message);
     }
   };
 
@@ -59,7 +60,17 @@ export default function ClubInfoPage({ params }) {
     <div>
       <h1>{club.name}</h1>
       <p>Members: {club.members.length}</p>
-      <button onClick={handleJoin}>Join Club</button>
+      <div className={classes.buttonContainer}>
+        <button className={classes.button} onClick={handleJoin}>
+          Join Club
+        </button>
+        <button
+          className={classes.button}
+          onClick={() => router.push("/clubs")}
+        >
+          Go Back
+        </button>
+      </div>
     </div>
   );
 }

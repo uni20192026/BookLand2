@@ -1,8 +1,11 @@
-'use client';
+// app/clubs/[id]/page.js
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image"; // Import Next.js Image component
+import classes from "./clubs.module.css";
 
 export default function ClubsPage() {
   const [clubs, setClubs] = useState([]);
@@ -10,9 +13,10 @@ export default function ClubsPage() {
 
   useEffect(() => {
     async function fetchClubs() {
-      const res = await fetch('/api/clubs');
+      const res = await fetch("/api/clubs");
       const data = await res.json();
       setClubs(data);
+      console.log(data);
     }
 
     fetchClubs();
@@ -21,15 +25,22 @@ export default function ClubsPage() {
   return (
     <div>
       <h1>Clubs</h1>
-      <ul>
+      <div className={classes.clubList}>
         {clubs.map((club) => (
-          <li key={club._id}>
-            <Link href={`/clubs/${club._id}`}>
-              {club.name}
+          <div key={club._id} className={classes.clubItem}>
+            <Image
+              src="/images/book-icon.png"
+              alt="Book Icon"
+              width={24}
+              height={24}
+              className={classes.icon}
+            />
+            <Link href={`/clubs/${club._id}`} className={classes.clubName}>
+              <span>{club.name}</span>
             </Link>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

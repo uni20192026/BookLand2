@@ -1,0 +1,43 @@
+.label {
+    margin-bottom: 30px;
+}
+
+.input {
+    margin-left: 20px;
+    height: 30px;
+    width: 200px;
+}
+
+.btnContainer {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btnSubmit {
+    padding: 0.5rem 1rem;
+    width: 130px;
+    height: 40px;
+    background-color: #3d52a0;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #eee2dc;
+}
+
+.btnSubmit:hover {
+    background-color: #bd3df4;
+}
+
+.btnBottum {
+    margin-top: 5px;
+    border: none;
+    background-color: white;
+}
+
+.btnBottum:hover {
+    color: rgb(32, 79, 32);
+    text-shadow: 0 0 1px rgba(32, 79, 32, 0.5);
+}

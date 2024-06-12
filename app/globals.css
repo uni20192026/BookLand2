@@ -5,12 +5,12 @@
   box-sizing: border-box;
 }
 
+
+
 html {
   font-family: 'Open Sans', sans-serif;
   height: 100%;
-  background: linear-gradient(180deg, #eee2dc, #bab2b5);
-  background-attachment: fixed;
-  background-size: cover;
+  background: none;
 }
 
 body {
@@ -21,57 +21,42 @@ body {
   flex-direction: column;
 }
 
-#root, .container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.container {
+  position: relative;
 }
 
 header {
-  padding: 1rem;
-}
-
-header nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: flex-start; /* Align items to the left */
   padding: 0;
-  margin: 0;
-  gap: 4rem; /* Increase the gap between the navigation links */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 50px;
+  z-index: 1000;
 }
 
-header nav ul li {
-  margin: 0;
+nav {
+  position: absolute;
+  top: 10px;
+  right: 15px;
 }
 
-header nav ul li a {
-  color: #7c7779;
-  text-decoration: none;
-  font-size: 1.5rem; /* Increased font size */
-  font-family: 'Mate', serif; /* Use Mate font */
-  font-weight: bold; /* Make text bold */
-}
-
-header nav ul li a:hover,
-header nav ul li a:active {
-  color: #f4c33d;
-}
-
-.main-header {
-  font-size: 2.5rem; /* Adjust the size as needed */
-  margin-top: 1rem; /* Add some top margin */
-  color: #123c69;
-  font-family: 'Mate', serif; /* Use Mate font */
-  text-align: center;
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 100px;
+  width: 250px;
+  height: 100%;
+  padding: 0;
+  z-index: 1000;
 }
 
 main {
-  text-align: center;
-  margin: 5rem auto;
-  flex: 1;
-  width: 90%; /* Increase the width */
-  max-width: 1400px; /* Ensure a maximum width */
+  margin-top: 50px;
+  margin-left: 350px;
+  padding: 30px 80px;
 }
+
 
 main img {
   width: 8rem;
@@ -85,11 +70,13 @@ h1 {
   margin: 3rem auto;
   color: #123c69;
   font-family: 'Mate', serif; /* Use Mate font */
+  text-align: center;
 }
 
 h2 {
+  margin: 0;
+  margin-top: 20px;
   font-size: 2rem; /* Adjust the size as needed */
-  margin-top: 2rem; /* Add some top margin */
   color: #ac3b61; /* Change color */
   font-family: 'Mate', serif; /* Use Mate font */
 }
@@ -97,40 +84,20 @@ h2 {
 h3 {
   color: #123c69;
   font-family: 'Mate', serif;
-
+  margin: 0;
+  
 }
 
-.club-name {
-  font-size: 1.5rem; /* Adjust the size as needed */
-  color: #123c69; /* Use the same color as h1 */
-  font-family: 'Mate', serif; /* Use Mate font */
-  margin: 1rem 0; /* Add some margin for spacing */
-  text-decoration: none; /* Remove underline */
-}
-
-.club-name:hover {
-  color: #ac3b6a; /* Change color on hover */
-}
 
 p {
   font-size: 1.2rem;
   color: #505152;
+  margin: 0;
 }
 
-p a {
-  color: #f4c33d;
-  text-decoration: none;
-  padding-bottom: 0.05rem;
-  border-bottom: 2px solid #f4c33d;
-}
 
-p a:hover,
-p a:active {
-  color: #bd3df4;
-  border-color: #bd3df4;
-}
 
-input {
+.input {
   margin: 1rem 0;
   padding: 0.5rem;
   border: 1px solid #123c69;
@@ -138,27 +105,9 @@ input {
   font-size: 1rem;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 2rem; /* Use gap property to control space between buttons */
-  margin-bottom: 1rem; /* Add some space below the buttons if needed */
-}
 
-button {
-  padding: 0.5rem 1rem;
-  background-color: #ac3b61;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #eee2dc;
-  font-family: 'Mate', serif;
-}
 
-button:hover {
-  background-color: #bd3df4;
-}
+
 
 footer {
   margin-top: 2rem;
@@ -168,28 +117,9 @@ footer {
   text-align: center;
 }
 
-.container {
-  padding: 20px;
-  width: 100%; /* Ensure container takes full width */
-  max-width: 1400px; /* Ensure a maximum width */
-  margin: 0 auto; /* Center the container */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
 
-.content {
-  display: flex;
-}
 
-.slideshow {
-  flex: 1;
-  margin-right: 20px;
-}
 
-.details {
-  flex: 1;
-}
 
 label {
   color: #535151;
@@ -197,36 +127,35 @@ label {
   font-family: 'Mate', serif; /* Use Mate font */
 }
 
+.auth-button {
+  padding: 0.5rem 1rem; /* Adjust button padding */
+  background-color: #ac3b61;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #eee2dc;
+  font-family: 'Mate', serif;
+}
 
-.place-list {
+.auth-button:hover {
+  background-color: #bd3df4;
+}
+
+.button-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 1rem; /* Adjust spacing as needed */
+  justify-content: center; /* Center buttons horizontally */
+}
+
+
+.gridContainer {
+  display: grid;
   gap: 20px;
+  grid-template-columns: repeat(3, 1fr); /* Three columns per row */
+  justify-items: center; /* Center items horizontally */
 }
 
-.place-item {
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-  width: 200px;
-  text-align: center;
-}
-
-.place-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.place-item a {
-  display: block;
-  margin-top: 10px;
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.place-item a:hover {
-  text-decoration: underline;
+.placeRow {
+  display: contents; /* Allows items to flow as grid children */
 }

@@ -1,0 +1,24 @@
+.placeBox {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ede8f5;
+  text-align: center;
+  width: 100%; /* Adjust to take full width of grid cell */
+}
+
+.placeImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 10px 0;
+}
+
+.mapLink {
+  color: #3d52a0;
+  text-decoration: none;
+}
+
+.mapLink:hover {
+  color: #ac3b6a;
+}

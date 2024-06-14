@@ -8,6 +8,7 @@ import PlaceBox from "@/components/PlaceBox";
 import "@/app/globals.css";
 
 import classes from "../votingpage.module.css";
+import styles from "@/styles/PlaceBox.module.css";
 
 export default function Step3Page({ params }) {
   const { id: clubId } = params;
@@ -114,7 +115,11 @@ export default function Step3Page({ params }) {
           </select>
         </div>
         {places.length > 0 ? (
-          places.map((place) => <PlaceBox key={place.place_id} place={place} />)
+          <div className={styles.placeList}>
+            {places.map((place) => (
+              <PlaceBox key={place.place_id} place={place} />
+            ))}
+          </div>
         ) : (
           <p>Loading coffee shops...</p>
         )}

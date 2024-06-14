@@ -1,34 +1,68 @@
-import React from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: '100%',
-  height: '400px'
+  width: "100%",
+  height: "400px",
 };
 
-const center = {
-  lat: 37.5665, // Center of Seoul
-  lng: 126.9780
-};
+const GoogleMapComponent = ({ placeId }) => {
+  const [placeDetails, setPlaceDetails] = useState(null);
+  const [error, setError] = useState(null);
 
-const GoogleMapComponent = ({ places }) => {
+  useEffect(() => {
+    const fetchPlaceDetails = async () => {
+      try {
+        const fields = "name,geometry";
+        const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+        const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${fields}&key=${apiKey}`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.result) {
+          setPlaceDetails(data.result);
+        } else {
+          setError("No details found for this place.");
+        }
+      } catch (error) {
+        setError(`Error fetching place details: ${error.message}`);
+        console.error("Fetch error:", error.message);
+      }
+    };
+
+    fetchPlaceDetails();
+  }, [placeId]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!placeDetails) {
+    return <div>Loading...</div>;
+  }
+
+  const { geometry } = placeDetails;
+  const location = geometry.location;
+
   return (
     <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
-        {places.map((place, index) => (
-          place.location && (
-            <Marker
-              key={index}
-              position={{
-                lat: place.location.lat,
-                lng: place.location.lng
-              }}
-            />
-          )
-        ))}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={{ lat: location.lat, lng: location.lng }}
+        zoom={15}
+      >
+        <Marker position={{ lat: location.lat, lng: location.lng }} />
       </GoogleMap>
     </LoadScript>
   );
-}
+};
 
 export default GoogleMapComponent;

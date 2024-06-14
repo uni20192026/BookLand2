@@ -87,7 +87,11 @@ export default function MemberPage({ params }) {
   } else if (step2Status === "finished" && step3Status === "in progress") {
     curstatus = <h3>Restaurant choosing is in progress.</h3>;
   } else if (step3Status === "finished") {
-    curstatus = <WinnerDisplay winnerData={club.votingResults} />;
+    curstatus = (
+      <Link href={`/clubs/${id}/results`} className={styles.resultLink}>
+        <h3>Vote is ended. Go to Result Page</h3>
+      </Link>
+    );
   } else {
     curstatus = (
       <h3>

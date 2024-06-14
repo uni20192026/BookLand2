@@ -1,45 +1,68 @@
-// pages/api/voting/step3/finish.js
+import { NextResponse } from "next/server";
+import clientPromise from "@/lib/mongodb";
 
-import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
-import { ObjectId } from 'mongodb';
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const clubId = searchParams.get("clubId");
 
-export async function POST(request) {
+  if (!clubId) {
+    return NextResponse.json({ message: "Invalid club ID" }, { status: 400 });
+  }
+
   try {
-    const { clubId } = await request.json(); // Fetch the clubId from the request body
-
-    if (!clubId || !ObjectId.isValid(clubId)) {
-      return NextResponse.json({ message: 'Invalid club ID' }, { status: 400 });
-    }
-
     const client = await clientPromise;
     const db = client.db();
 
-    // Update voting status to finished
-    await db.collection('clubs').updateOne(
-      { _id: new ObjectId(clubId) },
-      {
-        $set: {
-          'votingStatus.step3': 'finished', // Update voting status to finished
-        },
+    // Fetch voting results for the specified club ID
+    const votingResults = await db
+      .collection("voting")
+      .find({ clubId })
+      .toArray();
+    const voteCounts = {};
+
+    // Count votes for each coffee shop place
+    votingResults.forEach((result) => {
+      const placeId = result.step3;
+      if (placeId) {
+        if (voteCounts[placeId]) {
+          voteCounts[placeId]++;
+        } else {
+          voteCounts[placeId] = 1;
+        }
       }
+    });
+
+    // Determine the winning place ID
+    let winningPlaceId = null;
+    let maxVotes = 0;
+    for (const placeId in voteCounts) {
+      if (voteCounts[placeId] > maxVotes) {
+        maxVotes = voteCounts[placeId];
+        winningPlaceId = placeId;
+      }
+    }
+
+    // If no winning place, return appropriate message
+    if (!winningPlaceId) {
+      return NextResponse.json({ message: "No voting results found" });
+    }
+
+    // Fetch place details for the winning place ID
+    const winningResult = votingResults.find(
+      (result) => result.step3 === winningPlaceId
     );
 
-    // Call the results API to determine the winning place
-    const winnerResponse = await fetch(`/api/voting/step3/results?clubId=${clubId}`);
-    const winnerData = await winnerResponse.json();
-
-    if (winnerResponse.ok && winnerData.winner) {
-      // Send a successful response with the winner
-      return NextResponse.json({ winner: winnerData.winner });
-    } else {
-      // Send a failed response in case of an error
-      return NextResponse.json({ message: 'Failed to determine winner' }, { status: 500 });
-    }
+    return NextResponse.json({
+      winner: {
+        placeId: winningPlaceId,
+        name: winningResult.placeName,
+        link: winningResult.placeLink,
+      },
+    });
   } catch (error) {
-    // Catch and return server-side error
+    // Handle errors during the API request
     return NextResponse.json(
-      { message: 'Failed to finish voting and determine winner', error: error.message },
+      { message: "Failed to fetch voting results", error: error.message },
       { status: 500 }
     );
   }

@@ -43,6 +43,13 @@
     text-decoration: none;
     font-size: 1.2rem;
   }
+
+  .resultLink {
+    text-decoration: none;
+  }
+  .resultLink :hover {
+    color: #5f6e66;
+  }
   
   .stepBox a:hover {
     color: #ac3b6a; /* Change color on hover */
@@ -53,7 +60,7 @@
     padding: 10px;
     border: none;
     border-radius: 4px;
-    color: #eee2dc;
+    color: black;
     cursor: pointer;
     font-family: 'Mate', serif;
     margin-top: 5px; /* Add space between buttons */

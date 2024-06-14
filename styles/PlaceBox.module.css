@@ -1,10 +1,18 @@
+.placeList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  justify-content: center;
+  margin: 0;
+}
+
 .placeBox {
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid black;
   border-radius: 8px;
-  background-color: #ede8f5;
+  background-color: #f7f0dee7;
   text-align: center;
-  width: 100%; /* Adjust to take full width of grid cell */
+  width: 100%; 
 }
 
 .placeImage {
